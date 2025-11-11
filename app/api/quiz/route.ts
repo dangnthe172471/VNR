@@ -39,7 +39,7 @@ Yêu cầu:
 - Câu hỏi phải khác với câu "Đảng Cộng sản Việt Nam được thành lập vào thời gian nào?"
 - 1 đáp án đúng duy nhất
 - Đáp án rõ ràng, không gây nhầm lẫn
-- Giải thích ngắn gọn
+- Giải thích chi tiết nhưng không quá dài
 
 QUAN TRỌNG: Chỉ trả về JSON, không có text khác trước hoặc sau JSON.
 
@@ -53,7 +53,7 @@ Format JSON:
     "D": "Đáp án D"
   },
   "correctAnswer": "A",
-  "explanation": "Giải thích ngắn gọn"
+  "explanation": "Giải thích chi tiết nhưng không quá dài"
 }`;
 
       const generationConfig = {
