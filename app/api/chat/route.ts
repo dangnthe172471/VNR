@@ -87,8 +87,6 @@ Cuối cùng, luôn giữ mục tiêu là giáo dục, truyền cảm hứng và
     });
 
   } catch (error: any) {
-    console.error('Error calling Gemini API:', error);
-
     let errorDetails = error.message || 'Unknown error';
     let errorStatus = error.status || 500;
 

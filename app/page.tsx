@@ -22,6 +22,7 @@ interface QuizQuestion {
 }
 
 const STORAGE_KEY = 'vnr-chat-history'
+const QUIZ_STORAGE_KEY = 'vnr-quiz-state'
 const AVATAR_IMAGE = '/ho-chi-minh.png'
 const AVATAR_NAME = 'Chủ tịch Hồ Chí Minh'
 
@@ -79,6 +80,40 @@ export default function Home() {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  useEffect(() => {
+    try {
+      const savedQuiz = localStorage.getItem(QUIZ_STORAGE_KEY)
+      if (savedQuiz) {
+        const quizState = JSON.parse(savedQuiz)
+        if (quizState.currentQuestion) {
+          setCurrentQuestion(quizState.currentQuestion)
+        }
+        if (quizState.selectedAnswer) {
+          setSelectedAnswer(quizState.selectedAnswer)
+        }
+        if (quizState.result) {
+          setResult(quizState.result)
+        }
+      }
+    } catch (error) {
+      console.error('Error loading quiz state:', error)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (currentQuestion || selectedAnswer || result) {
+      try {
+        localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify({
+          currentQuestion,
+          selectedAnswer,
+          result
+        }))
+      } catch (error) {
+        console.error('Error saving quiz state:', error)
+      }
+    }
+  }, [currentQuestion, selectedAnswer, result])
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return
@@ -152,6 +187,11 @@ export default function Home() {
     setCurrentQuestion(null)
     setSelectedAnswer(null)
     setResult(null)
+    try {
+      localStorage.removeItem(QUIZ_STORAGE_KEY)
+    } catch (error) {
+      console.error('Error clearing quiz state:', error)
+    }
 
     try {
       const response = await fetch('/api/quiz', {
@@ -165,7 +205,7 @@ export default function Home() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || data.details || 'Failed to generate question')
+        throw new Error(data.error || data.details || `HTTP ${response.status}`)
       }
 
       if (data.success && data.quiz) {
