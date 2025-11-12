@@ -33,10 +33,7 @@ export async function POST(request: NextRequest) {
     if (action === 'generate') {
       const prompt = `Bạn là giáo viên chuyên về Lịch sử Đảng Cộng sản Việt Nam. Tạo một câu hỏi trắc nghiệm mới về Lịch sử Đảng với 4 đáp án A, B, C, D.
 
-Chủ đề có thể: sự ra đời Đảng (1920-1930), đấu tranh giành chính quyền (1930-1945), kháng chiến chống Pháp và Mỹ (1945-1975), xây dựng và đổi mới (1975-2018), cương lĩnh đường lối, Đại hội Đảng, nhân vật lãnh đạo.
-
 Yêu cầu:
-- Câu hỏi phải khác với câu "Đảng Cộng sản Việt Nam được thành lập vào thời gian nào?"
 - 1 đáp án đúng duy nhất
 - Đáp án rõ ràng, không gây nhầm lẫn
 - Giải thích chi tiết nhưng không quá dài
